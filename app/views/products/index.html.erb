@@ -8,6 +8,7 @@
       <th></th>
       <th>Item</th>
       <th>Price</th>
+      <th>Stock</th>
     </tr>
   </thead>
 
@@ -17,6 +18,7 @@
         <td><%= image_tag "products/#{product.image_url}" %></td>
         <td><span class="product_title"><%= link_to product.title, product_path(product) %></span><%= product.description %></td>
         <td><%= print_price(product.price) %></td>
+        <td><%= print_stock(product.stock) %></td>
       </tr>
     <% end %>
   </tbody>
