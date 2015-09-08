@@ -7,6 +7,9 @@ The Merchant Rails project is an online grocery shop. Users can:
 - Login using their Twitter account
 
 
+You can view the app [here](https://merchant-rails-app.herokuapp.com/products).
+
+
 #### Components
 This Rails project is based on [Jumpstart Lab Merchant tutorial](http://tutorials.jumpstartlab.com/projects/merchant.html). Additional components aside from those covered in the tutorial include:
 - Using PostgreSQL database in *development* and *test* environments
