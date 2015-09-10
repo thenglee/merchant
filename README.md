@@ -7,7 +7,7 @@ The Merchant Rails project is an online grocery shop. Users can:
 - Login using their Twitter account
 
 
-You can view the app [here](https://merchant-rails-app.herokuapp.com/products).
+You can view the app [here](https://merchant-rails-app.herokuapp.com).
 
 
 #### Components
