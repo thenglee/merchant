@@ -1,0 +1,43 @@
+<h1>Order Confirmation</h1>
+<div>Thank you. Your order has been confirmed.</div>
+
+<table>
+  <tr>
+    <th colspan="6">Order Summary</th>
+  </tr>
+  <tr>
+    <th>Customer:</th>
+    <td><%= @order.user.name if @order.user %></td>
+  </tr>
+  <tr>
+    <th>Status:</th>
+    <td><%= @order.status %></td>
+  </tr>
+  <tr>
+    <th>Items:</th>
+    <td><%= @order.order_items.count %></td>
+  </tr>
+  <tr>
+    <th>Items</th>
+    <th>Title</th>
+    <th>Quantity</th>
+    <th>Stock</th>
+    <th>Unit Price</th>
+    <th>Subtotal</th>
+  </tr>
+  <% @order.order_items.each do |item| %>
+    <tr>
+      <td><%= image_tag "products/#{item.product.image_url}" %></td>
+      <td><%= item.product.title %></td>
+      <td><%= item.quantity %></td>
+      <td><%= print_stock(item.product.stock, item.quantity) %></td>
+      <td><%= print_price item.product.price %></td>
+      <td><%= print_price item.subtotal %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>Order Total</th>
+    <td colspan="4"></td>
+    <td><%= print_price @order.total %></td>
+  </tr>
+</table>

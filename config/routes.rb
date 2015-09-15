@@ -2,7 +2,14 @@ Rails.application.routes.draw do
 
   root to: "products#index"
 
-  resources :orders
+  resources :addresses
+
+  resources :orders do
+    member do
+      get :confirm
+    end
+  end
+  
   resources :order_items
   resources :products
 

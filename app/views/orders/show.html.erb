@@ -1,17 +1,18 @@
 <h1>Your Order</h1>
 
+<%= form_for @order do |f| %>
 <table>
   <tr>
     <th>Customer:</th>
-    <td><%= @order.user.name if @order.user %></td>
+    <td colspan="6"><%= @order.user.name if @order.user %></td>
   </tr>
   <tr>
     <th>Status:</th>
-    <td><%= @order.status %></td>
+    <td colspan="6"><%= @order.status %></td>
   </tr>
   <tr>
     <th>Items:</th>
-    <td><%= @order.order_items.count %></td>
+    <td colspan="6"><%= @order.order_items.count %></td>
   </tr>
   <tr>
     <th>Items</th>
@@ -34,11 +35,25 @@
     </tr>
   <% end %>
   <tr>
-    <th>Order Total</th>
-    <td colspan="3"></td>
+    <th colspan="5">Order Total</th>
     <td><%= print_price @order.total %></td>
+    <td></td>
   </tr>
   <tr>
-    <td colspan="5"><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %> <td>
+    <td colspan="7"><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %> <td>
   </tr>
+  <% if current_user %>
+  <tr>
+    <th>Shipping To:</th>
+    <td colspan="5">
+      <%= f.select :address_id, current_user.addresses.collect { |a| [a.to_s, a.id] } %>
+      <br />
+      <%= link_to 'Add an address', new_address_path %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7"><%= f.submit "Submit Order" %></td>
+  </tr>
+  <% end %>
 </table>
+<% end %>
