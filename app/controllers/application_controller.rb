@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
       session[:order_id] = @order.id
     end
   end
+
+  # def current_admin?
+  #   current_user.admin?
+  # end
 end

@@ -10,6 +10,9 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    if @order.status == "submitted"
+      redirect_to confirm_order_path(@order)
+    end
   end
 
   # GET /orders/new

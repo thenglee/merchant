@@ -17,6 +17,16 @@ Rails.application.routes.draw do
   match '/login' => redirect("/auth/twitter"), as: :login, via: :get
   match '/logout' => "sessions#destroy", as: :logout, via: :get
 
+  # resources :orders do
+  #   member do
+  #     get :confirm
+  #     put :expire
+  #   end
+  #   collection do
+  #     put :expire_all
+  #   end
+  # end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
