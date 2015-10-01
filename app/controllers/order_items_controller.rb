@@ -1,6 +1,7 @@
 class OrderItemsController < ApplicationController
   before_action :load_order, only: [:create]
   before_action :set_order_item, only: [:edit, :destroy]
+  # this functions only checks whether the quatity is, only: [:create, :update]
 
   def index
     @order_items = OrderItem.all
@@ -13,12 +14,15 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-
     @order_item = @order.order_items.find_or_initialize_by(product_id: params[:product_id])
     @order_item.quantity += 1
 
+    product = @order_item.product
+    product.stock -= 1
+
     respond_to do |format|
       if @order_item.save
+        product.save
         format.html { redirect_to @order, notice: 'Successfully added product to cart.' }
         format.json { render :show, status: :created, location: @order_item }
       else
@@ -32,6 +36,11 @@ class OrderItemsController < ApplicationController
   # PATCH/PUT /order_items/1.json
   def update
     @order_item = OrderItem.find(params[:id])
+
+    # check = check_remaining_quantity
+    # if check[:status] == "OK"
+    # else
+    # end
 
     if params[:order_item][:quantity].to_i == 0
       @order_item.destroy
@@ -48,7 +57,12 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1
   # DELETE /order_items/1.json
   def destroy
+    product = @order_item.product
+    product.stock += @order_item.quantity
+    product.save
+
     @order_item.destroy
+
     respond_to do |format|
       format.html { redirect_to order_path(id: session[:order_id]), notice: 'Order item was successfully destroyed.' }
       format.json { head :no_content }
@@ -64,5 +78,19 @@ class OrderItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_item_params
       params.require(:order_item).permit(:product_id, :order_id, :quantity)
+    end
+
+    def check_remaining_quantity
+      # this functions only checks whether the quatity is
+      #desired_quantity = params[:order_item][:quantity].to_i
+      #available_quantity = ???
+      if desired_quantity > available_quantity
+        # option 1: make desired quantity = available quantity?
+        # option 2: fail the transaction and show error to user
+          # flash[:errors] = "Insufficient quantity"
+        return {status: "FAILURE", message: "Insufficient quantity"}
+      else
+        return {status: "OK"}
+      end      
     end
 end
