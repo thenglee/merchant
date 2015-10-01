@@ -42,11 +42,20 @@ class OrderItemsController < ApplicationController
     # else
     # end
 
-    if params[:order_item][:quantity].to_i == 0
+    new_quantity = params[:order_item][:quantity].to_i
+    current_quantity = @order_item.quantity
+    product = @order_item.product
+
+    product.stock -= new_quantity - current_quantity 
+
+    if new_quantity == 0
+      product.save
       @order_item.destroy
       redirect_to order_path(id: session[:order_id]), notice: 'Item was removed from cart.'
     else
-      if @order_item.update(order_item_params)
+      @order_item.quantity = new_quantity
+      if @order_item.save
+        product.save
         redirect_to order_path(id: session[:order_id]), notice: 'Successfully updated the order item.' 
       else
         render :edit 
