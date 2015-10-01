@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
     @order = Order.find_or_initialize_by(id: session[:order_id], status: "unsubmitted")
 
     if @order.new_record?
+      # @order.save!(validate: false)
       @order.save!
       session[:order_id] = @order.id
     end

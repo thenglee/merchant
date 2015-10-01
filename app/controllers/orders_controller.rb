@@ -43,13 +43,17 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    respond_to do |format|
-      if @order.update(order_params.merge(status: "submitted"))
-        session[:order_id] = nil
+    #if params[:order] && @order.update(order_params.merge(status: "submitted"))
+    if @order.update(order_params.merge(status: "submitted"))
+      session[:order_id] = nil
+      respond_to do |format|
         format.html { redirect_to confirm_order_path(@order) }
         format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
+      end
+    else
+      respond_to do |format|
+        # puts "\n==========\n#{@order.errors.inspect}\n==========\n"
+        format.html { render :show, notice: @order.errors }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
