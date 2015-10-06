@@ -11,10 +11,12 @@
     </div>
   <% end %>
 
-  <div><%= @order_item.product.title %></div>
+  <h2><%= @order_item.product.title %></h2>
+  <h5>Available Stock: <%= @order_item.product.stock %></h5>
+  <br />
 
   <div class="field">
-    <%= f.label :quantity %><br>
+    <%= f.label :quantity, 'Your order quantity:' %><br>
     <%= f.number_field :quantity %>
   </div>
   <div class="actions">
