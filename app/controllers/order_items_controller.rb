@@ -46,20 +46,36 @@ class OrderItemsController < ApplicationController
     current_quantity = @order_item.quantity
     product = @order_item.product
 
-    product.stock -= new_quantity - current_quantity 
+    # Update the product's stock
+    # product.stock -= new_quantity - current_quantity 
 
     if new_quantity == 0
+      # Update the product's stock
+      product.stock += current_quantity
       product.save
+
+      # Delete the order item
       @order_item.destroy
       redirect_to order_path(id: session[:order_id]), notice: 'Item was removed from cart.'
+    elsif new_quantity > (product.stock + current_quantity)
+      flash[:notice] = 'Not enough stock for the new quantity. Please specify another quantity.'
+      render :edit
     else
+      # Update the product's stock
+      product.stock -= new_quantity - current_quantity 
+
+      # Update the order item quantity
       @order_item.quantity = new_quantity
-      if @order_item.save
-        product.save
-        redirect_to order_path(id: session[:order_id]), notice: 'Successfully updated the order item.' 
-      else
-        render :edit 
-      end
+
+      product.save
+      @order_item.save
+      redirect_to order_path(id: session[:order_id]), notice: 'Successfully updated the order item.' 
+
+      ## Product should not save if [product.stock - (new quantity - current quantity)] < 0
+      ## Validation by Product model
+        ## cannot use -> if @order_item.save && product.save
+        ## can use -> if product.save && @order_item.save
+        ## can use -> if product.save  
     end
   end
 
