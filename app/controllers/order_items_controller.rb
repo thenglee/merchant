@@ -1,6 +1,6 @@
 class OrderItemsController < ApplicationController
   before_action :load_order, only: [:create]
-  before_action :set_order_item, only: [:edit, :destroy]
+  before_action :set_order_item, only: [:edit, :update, :destroy]
   # this functions only checks whether the quatity is, only: [:create, :update]
 
   def index
@@ -31,47 +31,39 @@ class OrderItemsController < ApplicationController
   # PATCH/PUT /order_items/1
   # PATCH/PUT /order_items/1.json
   def update
-    @order_item = OrderItem.find(params[:id])
-
-    # check = check_remaining_quantity
-    # if check[:status] == "OK"
-    # else
-    # end
-
     new_quantity = params[:order_item][:quantity].to_i
     current_quantity = @order_item.quantity
-    product = @order_item.product
-
-    # Update the product's stock
-    # product.stock -= new_quantity - current_quantity 
 
     if new_quantity == 0
-      # Update the product's stock
-      product.stock += current_quantity
-      product.save
-
-      # Delete the order item
-      @order_item.destroy
-      redirect_to order_path(id: session[:order_id]), notice: 'Item was removed from cart.'
-    elsif new_quantity > (product.stock + current_quantity)
-      flash[:notice] = 'Sorry. There is not enough stock available. Please specify another quantity.'
-      render :edit
+      if @order_item.return_order_item_to_product
+        respond_to do |format|
+          format.html { redirect_to @order_item.order, notice: 'Order item was successfully removed.' }
+          format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html do
+            flash[:notice] = 'There was an error in removing the item.'
+            render :edit
+          end
+          format.json { head :no_content }
+        end
+      end
     else
-      # Update the product's stock
-      product.stock -= new_quantity - current_quantity 
-
-      # Update the order item quantity
-      @order_item.quantity = new_quantity
-
-      product.save
-      @order_item.save
-      redirect_to order_path(id: session[:order_id]), notice: 'Successfully updated the order item.' 
-
-      ## Product should not save if [product.stock - (new quantity - current quantity)] < 0
-      ## Validation by Product model
-        ## cannot use -> if @order_item.save && product.save
-        ## can use -> if product.save && @order_item.save
-        ## can use -> if product.save  
+      if @order_item.get_from_product_stock(@order_item.product_id, new_quantity - current_quantity)
+        respond_to do |format|
+          format.html { redirect_to @order_item.order, notice: 'Successfully updated item quantity.' }
+          format.json { render :show, status: :created, location: @order_item }
+        end
+      else
+        respond_to do |format|
+          format.html do
+            flash[:notice] = 'Unable to update item quantity.'
+            render :edit
+          end
+          format.json { render json: @order_item.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end
 
@@ -100,19 +92,5 @@ class OrderItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_item_params
       params.require(:order_item).permit(:product_id, :order_id, :quantity)
-    end
-
-    def check_remaining_quantity
-      # this functions only checks whether the quatity is
-      #desired_quantity = params[:order_item][:quantity].to_i
-      #available_quantity = ???
-      if desired_quantity > available_quantity
-        # option 1: make desired quantity = available quantity?
-        # option 2: fail the transaction and show error to user
-          # flash[:errors] = "Insufficient quantity"
-        return {status: "FAILURE", message: "Insufficient quantity"}
-      else
-        return {status: "OK"}
-      end      
     end
 end

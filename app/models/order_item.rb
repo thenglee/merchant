@@ -15,11 +15,11 @@ class OrderItem < ActiveRecord::Base
   #   self.where(status: "outdated")
   # end
 
-  def get_from_product_stock(product_id, quantity)
+  def get_from_product_stock(product_id, quantity_to_add)
     product = Product.find_by(id: product_id)
-    if (product.stock >= quantity)
-      product.stock -= quantity
-      self.quantity += quantity
+    if (product.stock >= quantity_to_add)
+      product.stock -= quantity_to_add
+      self.quantity += quantity_to_add
 
       if self.valid? && product.valid?
         self.save
