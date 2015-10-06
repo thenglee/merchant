@@ -78,15 +78,16 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1
   # DELETE /order_items/1.json
   def destroy
-    product = @order_item.product
-    product.stock += @order_item.quantity
-    product.save
-
-    @order_item.destroy
-
-    respond_to do |format|
-      format.html { redirect_to order_path(id: session[:order_id]), notice: 'Order item was successfully destroyed.' }
-      format.json { head :no_content }
+    if @order_item.return_order_item_to_product
+      respond_to do |format|
+        format.html { redirect_to order_path(id: session[:order_id]), notice: 'Order item was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to order_path(id: session[:order_id]), notice: 'There was an error in removing the item.' }
+        format.json { head :no_content }
+      end
     end
   end
 

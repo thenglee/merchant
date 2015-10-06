@@ -28,4 +28,12 @@ class OrderItem < ActiveRecord::Base
       end
     end
   end
+
+  def return_order_item_to_product
+    product = self.product
+    if product.update_attributes(stock: product.stock + self.quantity)
+      self.destroy!
+      return true
+    end
+  end
 end
