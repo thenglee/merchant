@@ -11,12 +11,15 @@
     </div>
   <% end %>
 
-  <h2><%= @order_item.product.title %></h2>
-  <h5>Available Stock: <%= @order_item.product.stock %></h5>
+  <div><h2><%= @order_item.product.title %></h2></div>
+  <div><h5>Stock Left: <%= print_stock(@order_item.product.stock) %></h5></div>
+  <br />
+
+  <div>Cart quantity: <%= @order_item.quantity %></div>
   <br />
 
   <div class="field">
-    <%= f.label :quantity, 'Your order quantity:' %><br>
+    <%= f.label :quantity, 'Update your cart quantity:' %><br>
     <%= f.number_field :quantity %>
   </div>
   <div class="actions">

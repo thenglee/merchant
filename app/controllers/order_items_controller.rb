@@ -58,7 +58,7 @@ class OrderItemsController < ApplicationController
       @order_item.destroy
       redirect_to order_path(id: session[:order_id]), notice: 'Item was removed from cart.'
     elsif new_quantity > (product.stock + current_quantity)
-      flash[:notice] = 'Not enough stock for the new quantity. Please specify another quantity.'
+      flash[:notice] = 'Sorry. There is not enough stock available. Please specify another quantity.'
       render :edit
     else
       # Update the product's stock
