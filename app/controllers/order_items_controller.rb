@@ -15,18 +15,14 @@ class OrderItemsController < ApplicationController
   # POST /order_items.json
   def create
     @order_item = @order.order_items.find_or_initialize_by(product_id: params[:product_id])
-    @order_item.quantity += 1
-
-    product = @order_item.product
-    product.stock -= 1
-
-    respond_to do |format|
-      if @order_item.save
-        product.save
+    if @order_item.get_from_product_stock(params[:product_id], 1)
+      respond_to do |format|
         format.html { redirect_to @order, notice: 'Successfully added product to cart.' }
         format.json { render :show, status: :created, location: @order_item }
-      else
-        format.html { render :new }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @order, notice: 'Unable to add product to cart.' }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }
       end
     end

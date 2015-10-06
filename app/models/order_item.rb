@@ -14,4 +14,18 @@ class OrderItem < ActiveRecord::Base
   # def self.find_outdated # this is a class method, it will be called on the 'order_items' table
   #   self.where(status: "outdated")
   # end
+
+  def get_from_product_stock(product_id, quantity)
+    product = Product.find_by(id: product_id)
+    if (product.stock >= quantity)
+      product.stock -= quantity
+      self.quantity += quantity
+
+      if self.valid? && product.valid?
+        self.save
+        product.save
+        return self
+      end
+    end
+  end
 end
