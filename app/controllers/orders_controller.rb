@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
-    clear_order
+    @order.clear_order
     respond_to do |format|
       format.html { redirect_to products_path, notice: 'Your cart is now empty.' }
       format.json { head :no_content }
@@ -71,18 +71,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/confirm
   def confirm
-  end
-
-  def clear_order
-    # Add order items quantities back to products stock
-    @order.order_items.collect do |order_item|
-      product = order_item.product
-      product.stock += order_item.quantity
-      product.save
-    end
-
-    # Delete the order
-    @order.destroy
   end
 
   private

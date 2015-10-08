@@ -13,4 +13,16 @@ class Order < ActiveRecord::Base
     sum
   end
 
+  def clear_order
+    # Add order items quantities back to products stock
+    self.order_items.collect do |order_item|
+      product = order_item.product
+      product.stock += order_item.quantity
+      product.save
+    end
+
+    # Delete the order
+    self.destroy!
+  end
+
 end
