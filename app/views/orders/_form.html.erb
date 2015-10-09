@@ -47,24 +47,27 @@
 
   <br />
 
-  <h2>Shipping Address</h2>
-
-  <div>
-    <% if current_user.addresses.count > 0 %>
-      Please select a shipping address:
-      <br />
-      <%= f.select :address_id, current_user.addresses.collect { |a| [a.to_s, a.id] } %>
-      <br />
-    <% end %>
-    <br />
-    <%= link_to 'Add new shipping address', new_address_path %>
-  </div>
-
-  <br />
- 
-  <% if current_user.addresses.count > 0 %>
+  <% if !current_user %>
+    <div>Please <%= link_to "login or sign up", login_path %> to proceed with purchase.</div>
+  <% else %>
+    <h2>Shipping Address</h2>
     <div>
-      <%= f.submit "Proceed" %>
+      <% if current_user.addresses.count > 0 %>
+        Please select a shipping address:
+        <br />
+        <%= f.select :address_id, current_user.addresses.collect { |a| [a.to_s, a.id] } %>
+        <br />
+      <% end %>
+      <br />
+      <%= link_to 'Add new shipping address', new_address_path %>
     </div>
+
+    <br />
+   
+    <% if current_user.addresses.count > 0 %>
+      <div>
+        <%= f.submit "Proceed" %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
