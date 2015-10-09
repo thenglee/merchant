@@ -47,7 +47,7 @@ class OrdersController < ApplicationController
     if @order.update(order_params.merge(status: "submitted"))
       session[:order_id] = nil
       respond_to do |format|
-        format.html { redirect_to confirm_order_path(@order) }
+        format.html { redirect_to confirm_order_path(@order), notice: 'Thank you. Your order has been confirmed.' }
         format.json { render :show, status: :ok, location: @order }
       end
     else

@@ -1,26 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Your Order</h1>
+<h2>Your Order</h2>
 
 <table>
   <tr>
-    <th>Customer:</th>
-    <td colspan="6"><%= @order.user.name if @order.user %></td>
-  </tr>
-  <tr>
-    <th>Status:</th>
-    <td colspan="6"><%= @order.status %></td>
-  </tr>
-  <tr>
-    <th>Items:</th>
-    <td colspan="6"><%= @order.order_items.count %></td>
-  </tr>
-  <tr>
-    <th>Items</th>
-    <th>Title</th>
+    <th></th>
+    <th>Item</th>
     <th>Quantity</th>
     <th>Stock Left</th>
-    <th>Unit Price</th>
+    <th>Price</th>
     <th>Subtotal</th>
     <th></th>
   </tr>
@@ -38,13 +26,11 @@
   <tr>
     <th colspan="5">Order Total</th>
     <td><%= print_price @order.total %></td>
-    <td></td>
+    <td><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %></td>
   </tr>
   <tr>
-    <td colspan="7"><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %> <td>
-  </tr>
-  <tr>
-    <td colspan="7"><%= link_to "Checkout Cart", edit_order_path(@order) %></td>
+    <td colspan="6"><%= link_to "Continue shopping", root_path %></td>
+    <td><%= link_to "Checkout Cart", edit_order_path(@order) %></td>
   </tr>
 
 </table>

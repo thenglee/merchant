@@ -1,28 +1,19 @@
-<h1>Order Confirmation</h1>
-<div>Thank you. Your order has been confirmed.</div>
+<p id="notice"><%= notice %></p>
 
+<h2>Order Confirmation</h2>
+
+<div>Order Number: <%= @order.id %></div>
+<div>Order Status: <%= @order.status %></div>
+
+<br />
+
+<h3>Order Details</h3>
 <table>
   <tr>
-    <th colspan="6">Order Summary</th>
-  </tr>
-  <tr>
-    <th>Customer:</th>
-    <td><%= @order.user.name if @order.user %></td>
-  </tr>
-  <tr>
-    <th>Status:</th>
-    <td><%= @order.status %></td>
-  </tr>
-  <tr>
-    <th>Items:</th>
-    <td><%= @order.order_items.count %></td>
-  </tr>
-  <tr>
-    <th>Items</th>
-    <th>Title</th>
+    <th></th>
+    <th>Item</th>
     <th>Quantity</th>
-    <th>Stock Left</th>
-    <th>Unit Price</th>
+    <th>Price</th>
     <th>Subtotal</th>
   </tr>
   <% @order.order_items.each do |item| %>
@@ -30,14 +21,20 @@
       <td><%= image_tag "products/#{item.product.image_url}" %></td>
       <td><%= item.product.title %></td>
       <td><%= item.quantity %></td>
-      <td><%= print_stock(item.product.stock, item.quantity) %></td>
       <td><%= print_price item.product.price %></td>
       <td><%= print_price item.subtotal %></td>
     </tr>
   <% end %>
   <tr>
     <th>Order Total</th>
-    <td colspan="4"></td>
+    <td colspan="3"></td>
     <td><%= print_price @order.total %></td>
   </tr>
 </table>
+
+<br />
+
+<h3>Shipping Address</h3>
+<div><%= @order.address.to_s %></div>
+
+
