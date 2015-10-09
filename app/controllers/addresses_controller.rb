@@ -30,7 +30,7 @@ class AddressesController < ApplicationController
 
     respond_to do |format|
       if @address.save
-        format.html { redirect_to order_path(id: session[:order_id]), notice: 'Address was successfully created.' }
+        format.html { redirect_to edit_order_path(id: session[:order_id]), notice: 'New shipping address added.' }
         format.json { render :show, status: :created, location: @address }
       else
         format.html { render :new }

@@ -11,15 +11,58 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
+  <h2>Your Order</h2>
+
+  <div><%= link_to "Edit your order", @order %></div>
+
+  <div>
+    <table>
+      <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+      </tr>
+       <% @order.order_items.each do |item| %>
+        <tr>
+          <td><%= image_tag "products/#{item.product.image_url}" %></td>
+          <td><%= item.product.title %></td>
+          <td><%= item.quantity %></td>
+          <td><%= print_price item.product.price %></td>
+          <td><%= print_price item.subtotal %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <th colspan="4">Order Total</th>
+        <td><%= print_price @order.total %></td>
+        <td></td>
+      </tr>
+    </table>
   </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
+
+  
+
+  <br />
+
+  <h2>Shipping Address</h2>
+
+  <div>
+    <% if current_user.addresses.count > 0 %>
+      Please select an address:
+      <br />
+      <%= f.select :address_id, current_user.addresses.collect { |a| [a.to_s, a.id] } %>
+      <br />
+    <% end %>
+    <br />
+    <%= link_to 'Add new address', new_address_path %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <br />
+ 
+  <% if current_user.addresses.count > 0 %>
+    <div>
+      <%= f.submit "Proceed" %>
+    </div>
+  <% end %>
 <% end %>
