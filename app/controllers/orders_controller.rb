@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy, :confirm]
+  before_action :check_order_status, only: [:show, :edit]
 
   # GET /orders
   # GET /orders.json
@@ -10,9 +11,6 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    if @order.status == "submitted"
-      redirect_to confirm_order_path(@order)
-    end
   end
 
   # GET /orders/new
@@ -87,5 +85,11 @@ class OrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
       params.require(:order).permit(:user_id, :status, :address_id)
+    end
+
+    def check_order_status
+      if @order.status == "submitted"
+        redirect_to confirm_order_path(@order)
+      end
     end
 end
