@@ -22,8 +22,8 @@
       <% end %>
     </div>
     
-    <div class="sidebar">
-      (sidebar)
+    <div>
+      <%= link_to 'My Cart', session[:order_id] ? order_path(id: session[:order_id]) : empty_orders_path %>
     </div>
 
     <div class="main">

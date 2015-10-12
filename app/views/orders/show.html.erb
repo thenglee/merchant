@@ -1,36 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Your Order</h2>
+<h2>Your Cart</h2>
 
-<table>
-  <tr>
-    <th></th>
-    <th>Item</th>
-    <th>Quantity</th>
-    <th>Stock Left</th>
-    <th>Price</th>
-    <th>Subtotal</th>
-    <th></th>
-  </tr>
-  <% @order.order_items.each do |item| %>
+<% if @order.order_items.count == 0 %>
+  <%= render 'empty' %>
+<% else %>
+  <table>
     <tr>
-      <td><%= image_tag "products/#{item.product.image_url}" %></td>
-      <td><%= item.product.title %></td>
-      <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
-      <td><%= print_stock(item.product.stock, item.quantity) %></td>
-      <td><%= print_price item.product.price %></td>
-      <td><%= print_price item.subtotal %></td>
-      <td><%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <th></th>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Stock Left</th>
+      <th>Price</th>
+      <th>Subtotal</th>
+      <th></th>
     </tr>
-  <% end %>
-  <tr>
-    <th colspan="5">Order Total</th>
-    <td><%= print_price @order.total %></td>
-    <td><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %></td>
-  </tr>
-  <tr>
-    <td colspan="6"><%= link_to "Continue shopping", root_path %></td>
-    <td><%= link_to "Checkout Cart", edit_order_path(@order) %></td>
-  </tr>
-
-</table>
+    <% @order.order_items.each do |item| %>
+      <tr>
+        <td><%= image_tag "products/#{item.product.image_url}" %></td>
+        <td><%= item.product.title %></td>
+        <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
+        <td><%= print_stock(item.product.stock, item.quantity) %></td>
+        <td><%= print_price item.product.price %></td>
+        <td><%= print_price item.subtotal %></td>
+        <td><%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th colspan="5">Order Total</th>
+      <td><%= print_price @order.total %></td>
+      <td><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %></td>
+    </tr>
+    <tr>
+      <td colspan="6"><%= link_to "Continue shopping", root_path %></td>
+      <td><%= link_to "Checkout Cart", edit_order_path(@order) %></td>
+    </tr>
+  </table>
+<% end %>

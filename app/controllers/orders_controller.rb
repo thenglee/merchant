@@ -63,14 +63,19 @@ class OrdersController < ApplicationController
   # DELETE /orders/1.json
   def destroy
     @order.clear_order
+    session[:order_id] = nil
     respond_to do |format|
-      format.html { redirect_to products_path, notice: 'Your cart is now empty.' }
+      format.html { redirect_to root_path, notice: 'Your cart is now empty.' }
       format.json { head :no_content }
     end
   end
 
   # GET /orders/1/confirm
   def confirm
+  end
+
+  # GET /orders/empty
+  def empty
   end
 
   private
