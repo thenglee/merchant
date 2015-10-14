@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
 
       else
         # User has no previous pending order, assign the order currently in the session to user
-
+        @order = Order.find(session[:order_id])
+        @order.update_attributes(user: @user)
       end
     else
       # No order currently in session
