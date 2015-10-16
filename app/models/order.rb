@@ -19,10 +19,9 @@ class Order < ActiveRecord::Base
       product = order_item.product
       product.stock += order_item.quantity
       product.save
+      order_item.destroy
     end
 
-    # Delete the order
-    self.destroy!
   end
 
 end
