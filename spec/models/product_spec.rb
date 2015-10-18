@@ -11,6 +11,13 @@ RSpec.describe Product, type: :model do
       @product = Product.new(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10)
     end
 
+    [:title, :price, :description, :image_url, :stock].each do |attr|
+      it "should have a #{attr}" do
+        @product.send("#{attr}=", nil)
+        expect(@product.valid?).to eq false
+      end
+    end
+
     it "should have a title" do
       @product.title = nil
       expect(@product.valid?).to eq false
@@ -34,6 +41,18 @@ RSpec.describe Product, type: :model do
     it "should have a stock" do
       @product.stock = nil
       expect(@product.valid?).to eq false
+    end
+
+    [:price, :stock].each do |attr|
+      it "should have a numerical value for #{attr}" do
+        @product.send("#{attr}=", "ten")
+        expect(@product.valid?).to eq false
+      end
+
+      it "should have a positive value for #{attr}" do
+        @product.send("#{attr}=", -10)
+        expect(@product.valid?).to eq false
+      end
     end
 
     it "should have a numerical value for price" do
