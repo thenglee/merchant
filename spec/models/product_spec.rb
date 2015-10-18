@@ -36,5 +36,30 @@ RSpec.describe Product, type: :model do
       product.stock = nil
       expect(product.valid?).to eq false
     end
+
+    it "should have a numerical value for price" do
+      product = Product.new(title: "Product", price: "ten", description: "product text", image_url: "img1.png", stock: 10)
+      expect(product.valid?).to eq false
+    end
+
+    it "should have a positive value for price" do
+      product = Product.new(title: "Product", price: -10, description: "product text", image_url: "img1.png", stock: 10)
+      expect(product.valid?).to eq false
+    end
+
+    it "should have a numerical value for stock" do
+      product = Product.new(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: "ten")
+      expect(product.valid?).to eq false
+    end
+
+    it "should have an integer value for stock" do
+      product = Product.new(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10.50)
+      expect(product.valid?).to eq false
+    end
+
+    it "should have a positive integer value for stock" do
+      product = Product.new(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: -10)
+      expect(product.valid?).to eq false
+    end
   end
 end
