@@ -80,4 +80,22 @@ RSpec.describe Product, type: :model do
       expect(@product.valid?).to eq false
     end
   end
+
+
+  describe "methods" do
+    before do
+      @product = Product.new(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10)
+    end
+
+    describe "#in_stock?" do
+      it "should return true when a product has stock" do
+        expect(@product.in_stock?).to eq true
+      end
+
+      it "should return false when a product has no stock" do
+        @product.stock = 0
+        expect(@product.in_stock?).to eq false
+      end
+    end
+  end
 end
