@@ -6,11 +6,6 @@ class Product < ActiveRecord::Base
   	                  greater_than_or_equal_to: 0 
                     }
 
-  def price=(input)
-    input.delete!("$")
-    super
-  end
-
   def in_stock?
     stock > 0 ? true : false
   end
