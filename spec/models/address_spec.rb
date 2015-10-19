@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Address, type: :model do
   before do
-    @user = User.new(provider: "twitter", uid: "0123456789", name: "name")
+    @user = User.create(provider: "twitter", uid: "0123456789", name: "name")
   end
 
   it "is valid" do
