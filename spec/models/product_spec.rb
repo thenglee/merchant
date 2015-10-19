@@ -82,18 +82,19 @@ RSpec.describe Product, type: :model do
   end
 
   describe "model associations" do
+    before do
+      @product = Product.create(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10)
+    end
 
     it "should have order_items" do
-      product = Product.create(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10)
-      expect(product.respond_to?(:order_items)).to eq true
+      expect(@product.respond_to?(:order_items)).to eq true
     end
 
     it "should be return its order items" do
-      product = Product.create(title: "Product", price: 10, description: "product text", image_url: "img1.png", stock: 10)
       order = Order.create(status: "unsubmitted")
-      order_item = OrderItem.create(order_id: order.id, product_id: product.id, quantity: 20)
+      order_item = OrderItem.create(order_id: order.id, product_id: @product.id, quantity: 20)
 
-      expect(product.order_items).to eq [order_item]
+      expect(@product.order_items).to eq [order_item]
     end
   end
 
