@@ -90,7 +90,7 @@ RSpec.describe Product, type: :model do
       expect(@product.respond_to?(:order_items)).to eq true
     end
 
-    it "should be return its order items" do
+    it "should return its order items" do
       order = Order.create(status: "unsubmitted")
       order_item = OrderItem.create(order_id: order.id, product_id: @product.id, quantity: 20)
 

@@ -42,4 +42,16 @@ RSpec.describe OrderItem, type: :model do
       expect(order_item.valid?).to eq false
     end
   end
+
+  describe "model associations" do
+    it "should have an order" do
+      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
+      expect(order_item.respond_to?(:order)).to eq true
+    end
+
+    it "should return its order" do
+      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
+      expect(order_item.order).to eq @order
+    end
+  end
 end
