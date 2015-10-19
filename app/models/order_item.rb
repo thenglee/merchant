@@ -1,11 +1,12 @@
 class OrderItem < ActiveRecord::Base
-  belongs_to :order
-  belongs_to :product
   validates :order_id, :product_id, presence: true
   validates :quantity, numericality: { 
-  	                     only_integer: true, 
-  	                     greater_than: 0
-  	                   }
+                         only_integer: true, 
+                         greater_than: 0
+                       }
+
+  belongs_to :order
+  belongs_to :product
 
   def subtotal # this is an instance method, it will be called on one 'order_item' instance/row
     self.product.price * self.quantity
