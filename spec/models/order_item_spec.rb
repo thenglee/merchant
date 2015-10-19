@@ -21,5 +21,25 @@ RSpec.describe OrderItem, type: :model do
       order_item = OrderItem.new(order_id: @order.id, quantity: 10)
       expect(order_item.valid?).to eq false
     end
+
+    it "should have quantity" do
+      order_item = OrderItem.create(product_id: @product.id, order_id: @order.id)
+      expect(order_item.valid?).to eq false
+    end
+
+    it "should have a numerical value for quantity" do
+      order_item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity: "ten")
+      expect(order_item.valid?).to eq false
+    end
+
+    it "should have an integer value for quantity" do
+      order_item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity: 10.50)
+      expect(order_item.valid?).to eq false
+    end
+
+    it "should have a positive integer value for quantity" do
+      order_item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity: -10)
+      expect(order_item.valid?).to eq false
+    end
   end
 end
