@@ -44,24 +44,24 @@ RSpec.describe OrderItem, type: :model do
   end
 
   describe "model associations" do
+    before do
+      @order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
+    end
+
     it "should have order" do
-      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
-      expect(order_item.respond_to?(:order)).to eq true
+      expect(@order_item.respond_to?(:order)).to eq true
     end
 
     it "should return its order" do
-      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
-      expect(order_item.order).to eq @order
+      expect(@order_item.order).to eq @order
     end
 
     it "should have product" do
-      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
-      expect(order_item.respond_to?(:product)).to eq true
+      expect(@order_item.respond_to?(:product)).to eq true
     end
 
     it "should return its product" do
-      order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
-      expect(order_item.product).to eq @product
+      expect(@order_item.product).to eq @product
     end
   end
 end
