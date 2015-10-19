@@ -35,5 +35,17 @@ RSpec.describe Order, type: :model do
       order = Order.new(status: "unsubmitted", user_id: user.id)
       expect(order.user).to eq user
     end
+
+    it "should have address" do
+      order = Order.new(status: "unsubmitted")
+      expect(order.respond_to?(:address)).to eq true
+    end
+
+    it "should return its address" do
+      user = User.create(provider: "twitter", uid: "0123456789", name: "name")
+      address = Address.create(line1: "line1", line2: "line2", city: "city", state: "WA", zip: "12345", user_id: user.id)
+      order = Order.new(status: "unsubmitted", address_id: address.id)
+      expect(order.address).to eq address
+    end
   end
 end
