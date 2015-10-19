@@ -48,6 +48,12 @@ RSpec.describe OrderItem, type: :model do
       @order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
     end
 
+    [:order, :product].each do |attr|
+      it "should have #{attr}" do
+        expect(@order_item.respond_to?(attr)).to eq true
+      end
+    end
+
     it "should have order" do
       expect(@order_item.respond_to?(:order)).to eq true
     end
