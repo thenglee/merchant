@@ -93,7 +93,7 @@ RSpec.describe Address, type: :model do
 
   describe "model assocations" do
     before do
-      @address = Address.new(line1: "line1", line2: "line2", city: "city", state: "WA", zip: "12345", user_id: @user.id)
+      @address = Address.create(line1: "line1", line2: "line2", city: "city", state: "WA", zip: "12345", user_id: @user.id)
     end
 
     it "should have user" do
@@ -102,6 +102,15 @@ RSpec.describe Address, type: :model do
 
     it "should return its user" do
       expect(@address.user).to eq @user
+    end
+
+    it "should have orders" do
+      expect(@address.respond_to?(:orders)).to eq true
+    end
+
+    it "should return its orders" do
+      order = Order.create(status: "unsubmitted", address_id: @address.id)
+      expect(@address.orders).to eq [order]
     end
   end
 end
