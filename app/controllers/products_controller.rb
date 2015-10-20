@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   end
 
   def all_products
-    @products = Product.all
+    @products = Product.all.order(stock: :desc)
   end
 
   # GET /products/1
