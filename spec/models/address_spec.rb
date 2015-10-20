@@ -39,5 +39,25 @@ RSpec.describe Address, type: :model do
       @address.user_id = nil
       expect(@address.valid?).to eq false
     end
+
+    it "should have numerical value for zip" do
+      @address.zip = "one"
+      expect(@address.valid?).to eq false
+    end
+
+    it "should have an integer value for zip" do
+      @address.zip = 123.4
+      expect(@address.valid?).to eq false
+    end
+
+    it "should have positive integer value for zip" do
+      @address.zip = -1234
+      expect(@address.valid?).to eq false
+    end
+
+    it "should have maximum length of 5 for zip" do
+      @address.zip = 123456
+      expect(@address.valid?).to eq false
+    end
   end
 end
