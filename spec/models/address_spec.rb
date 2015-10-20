@@ -90,4 +90,18 @@ RSpec.describe Address, type: :model do
       expect(@address.valid?).to eq false
     end
   end
+
+  describe "model assocations" do
+    before do
+      @address = Address.new(line1: "line1", line2: "line2", city: "city", state: "WA", zip: "12345", user_id: @user.id)
+    end
+
+    it "should have user" do
+      expect(@address.respond_to?(:user)).to eq true
+    end
+
+    it "should return its user" do
+      expect(@address.user).to eq @user
+    end
+  end
 end
