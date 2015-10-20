@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   end
   
   resources :order_items
-  resources :products
+  resources :products do
+    collection do
+      get :all_products
+    end
+  end
 
   match '/auth/:provider/callback', to: 'sessions#create', via: :get
   match '/login' => redirect("/auth/twitter"), as: :login, via: :get
