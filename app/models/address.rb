@@ -1,6 +1,6 @@
 class Address < ActiveRecord::Base
   validates :line1, :city, :state, :zip, :user_id, presence: true
-  validates :zip, length: { maximum: 5 }, numericality: {
+  validates :zip, length: { is: 5 }, numericality: {
                                             only_integer: true,
                                             greater_than: 0 }
   validates :state, length: { is: 2 },

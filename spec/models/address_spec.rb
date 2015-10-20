@@ -55,6 +55,11 @@ RSpec.describe Address, type: :model do
       expect(@address.valid?).to eq false
     end
 
+    it "should have minimum length of 5 for zip" do
+      @address.zip = 1234
+      expect(@address.valid?).to eq false
+    end
+
     it "should have maximum length of 5 for zip" do
       @address.zip = 123456
       expect(@address.valid?).to eq false
