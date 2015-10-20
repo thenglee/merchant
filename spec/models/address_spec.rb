@@ -59,5 +59,30 @@ RSpec.describe Address, type: :model do
       @address.zip = 123456
       expect(@address.valid?).to eq false
     end
+
+    it "should have minimum length of 2 for state" do
+      @address.state = "A"
+      expect(@address.valid?).to eq false
+    end
+
+     it "should have maximum length of 2 for state" do
+      @address.state = "MAD"
+      expect(@address.valid?).to eq false
+    end
+
+    it "should not have numerical value for state" do
+      @address.state = 11
+      expect(@address.valid?).to eq false
+    end
+
+    it "should have uppercase value for state" do
+      @address.state = "cA"
+      expect(@address.valid?).to eq false
+    end
+
+    it "should match US state abbreviation for state" do
+      @address.state = "AA"
+      expect(@address.valid?).to eq false
+    end
   end
 end
