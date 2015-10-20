@@ -16,12 +16,12 @@ RSpec.describe OrderItem, type: :model do
       @order_item = OrderItem.new(order_id: @order.id, product_id: @product.id, quantity: 10)
     end
 
-    it "should have an order" do
+    it "should have order" do
       @order_item.order_id = nil
       expect(@order_item.valid?).to eq false
     end
 
-    it "should have a product" do
+    it "should have product" do
       @order_item.product_id = nil
       expect(@order_item.valid?).to eq false
     end
