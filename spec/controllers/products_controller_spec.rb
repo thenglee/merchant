@@ -50,6 +50,20 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  describe "GET #show" do
+    it "assign the requested product to @product" do
+      p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+      get :show, id: p1.id
+      expect(assigns(:product)).to eq p1
+    end
+
+    it "renders the show template" do
+      p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+      get :show, id: p1.id
+      expect(response).to render_template("show")
+    end
+  end
+
   describe "POST #create" do
     describe "failure" do
       it "should not create a new product with missing mandatory attributes" do
