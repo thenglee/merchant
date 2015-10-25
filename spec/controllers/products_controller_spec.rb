@@ -93,5 +93,30 @@ RSpec.describe ProductsController, type: :controller do
         expect(response).to redirect_to p1
       end
     end
+
+    describe "failure" do
+      it "should find the requested product" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: nil }
+        expect(assigns(:product)).to eq p1
+      end
+
+      it "should not update product attributes" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: "Product 3", price: nil, description: nil, image_url: nil, stock: nil }
+        p1.reload
+        expect(p1.title).not_to eq "Product 3"
+        expect(p1.price).to eq 10
+        expect(p1.description).to eq "product 1 text"
+        expect(p1.image_url).to eq "img1.png"
+        expect(p1.stock).to eq 10
+      end
+
+      it "should re-render the edit template" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: nil }
+        expect(response).to render_template("edit")
+      end
+    end
   end
 end
