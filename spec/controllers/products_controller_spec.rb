@@ -119,4 +119,19 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    it "should delete the product" do
+      p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+      expect{
+        delete :destroy, id: p1.id
+      }.to change(Product, :count).by(-1)
+    end
+
+    it "should redirect to products#index" do
+      p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+      delete :destroy, id: p1.id
+      expect(response).to redirect_to products_url
+    end
+  end
 end
