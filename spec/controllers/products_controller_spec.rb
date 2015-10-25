@@ -67,4 +67,31 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
   end
+
+  describe "PUT #update" do
+    describe "success" do
+      it "should find the requested product" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: "Product 2", price: 20, description: "product 2 text", image_url: "img2.png", stock: 20}
+        expect(assigns(:product)).to eq p1
+      end
+
+      it "should update product attributes" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: "Product 2", price: 20, description: "product 2 text", image_url: "img2.png", stock: 20}
+        p1.reload
+        expect(p1.title).to eq("Product 2")
+        expect(p1.price).to eq(20)
+        expect(p1.description).to eq("product 2 text")
+        expect(p1.image_url).to eq("img2.png")
+        expect(p1.stock).to eq(20)
+      end
+
+      it "should redirect to updated product" do
+        p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+        put :update, id: p1.id, product: { title: "Product 2", price: 20, description: "product 2 text", image_url: "img2.png", stock: 20}
+        expect(response).to redirect_to p1
+      end
+    end
+  end
 end
