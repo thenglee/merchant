@@ -35,6 +35,21 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  describe "GET #index" do
+    it "returns all the products" do
+      p1 = Product.create(title: "Product 1", price: 10, description: "product 1 text", image_url: "img1.png", stock: 10)
+      p2 = Product.create(title: "Product 2", price: 20, description: "product 2 text", image_url: "img2.png", stock: 20)
+
+      get :index
+      expect(assigns(:products)).to eq [p1,p2]
+    end
+
+    it "renders index template" do
+      get :index
+      expect(response).to render_template("index")
+    end
+  end
+
   describe "POST #create" do
     describe "failure" do
       it "should not create a new product with missing mandatory attributes" do
