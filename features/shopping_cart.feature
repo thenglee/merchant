@@ -24,5 +24,13 @@ Feature: Visit store and to select and buy items
     When the user clicks on the "Continue shopping" link
     Then the user should be able to go back to the home page
 
+  Scenario: Check out cart when not logged in
+    Given the user is at the home page
+    And the user has an 'Oranges' item in the cart
+    When the user clicks on the "My Cart" link
+    Then the user should see the Cart
+    When the user clicks on the "Checkout Cart" link
+    Then the user should see "Please login or sign up to proceed with purchase."
+
   Scenario: Add an item to cart when logged in
-  Scenario: Check out cart
+  Scenario: Empty cart
