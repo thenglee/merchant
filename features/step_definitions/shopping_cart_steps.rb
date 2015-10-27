@@ -10,8 +10,8 @@ Then(/^the user should see the 'Oranges' item in the product catalogue$/) do
   expect(page).to have_content('Oranges')
 end
 
-When(/^the user clicks on the 'Oranges' link$/) do
-  click_link 'Oranges'
+When(/^the user clicks on the "(.*?)" link$/) do |link_name|
+  click_link link_name
 end
 
 Then(/^the user should see the 'Oranges' item details$/) do
@@ -23,10 +23,6 @@ end
 
 Then(/^the user should see the 'Back' link$/) do
   find_link('Back').visible?
-end
-
-When(/^the user clicks on the 'Back' link$/) do
-  click_link 'Back'
 end
 
 When(/^the user should be able to go back to the home page$/) do
@@ -47,8 +43,4 @@ end
 
 Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
   expect(page).to have_content(item_quantity)
-end
-
-When(/^the user clicks on 'Continue shopping'$/) do
-  click_link 'Continue shopping'
 end

@@ -8,10 +8,10 @@ Feature: Visit store and to select and buy items
     Given there is an 'Oranges' item in the products list
     When the user goes to the products URL
     Then the user should see the 'Oranges' item in the product catalogue
-    When the user clicks on the 'Oranges' link
+    When the user clicks on the "Oranges" link
     Then the user should see the 'Oranges' item details
     And the user should see the 'Back' link
-    When the user clicks on the 'Back' link
+    When the user clicks on the "Back" link
     And the user should be able to go back to the home page
 
   Scenario: Add an item to cart when not logged in
@@ -21,7 +21,7 @@ Feature: Visit store and to select and buy items
     Then the user should see the Cart
     And the user should see an 'Oranges' item in the cart
     And the 'Oranges' item should have quantity 1
-    When the user clicks on 'Continue shopping'
+    When the user clicks on the "Continue shopping" link
     Then the user should be able to go back to the home page
 
   Scenario: Add an item to cart when logged in
