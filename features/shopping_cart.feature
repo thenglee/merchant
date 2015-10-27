@@ -11,4 +11,18 @@ Feature: Visit store and to select and buy items
     When the user clicks on the 'Oranges' link
     Then the user should see the 'Oranges' item details
     And the user should see the 'Back' link
-    And the user should be able to go back to the products catalogue page
+    When the user clicks on the 'Back' link
+    And the user should be able to go back to the home page
+
+  Scenario: Add an item to cart when not logged in
+    Given there is an 'Oranges' item in the products list
+    When the user goes to the products URL
+    And the user clicks on the 'Add to Cart' button for the 'Oranges' item
+    Then the user should see the Cart
+    And the user should see an 'Oranges' item in the cart
+    And the 'Oranges' item should have quantity 1
+    When the user clicks on 'Continue shopping'
+    Then the user should be able to go back to the home page
+
+  Scenario: Add an item to cart when logged in
+  Scenario: Check out cart
