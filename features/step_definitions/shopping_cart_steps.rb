@@ -1,3 +1,5 @@
+require "rack_session_access/capybara"
+
 Given(/^there is an 'Oranges' item in the products list$/) do
   Product.create(title: "Oranges", price: 2.99, description: "Bag of 6 Valencia oranges", image_url: "oranges.jpg", stock: 50)
 end
@@ -45,18 +47,18 @@ Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
   expect(page).to have_content(item_quantity)
 end
 
-Given(/^the user is at the home page$/) do
-  visit root_path
-end
-
 Given(/^the user has an 'Oranges' item in the cart$/) do
   product = Product.create(title: "Oranges", price: 2.99, description: "Bag of 6 Valencia oranges", image_url: "oranges.jpg", stock: 50)
   order = Order.create(status: "unsubmitted")
   order.order_items.create(product_id: product.id, quantity: 1)
 
-  pending
+  page.set_rack_session(order_id: order.id)
 end
 
-Then(/^the user should see "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+And(/^the user is at the home page$/) do
+  visit root_path
+end
+
+Then(/^the user should see "(.*?)"$/) do |content|
+  expect(page).to have_content(content)
 end

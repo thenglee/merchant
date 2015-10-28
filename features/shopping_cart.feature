@@ -25,10 +25,11 @@ Feature: Visit store and to select and buy items
     Then the user should be able to go back to the home page
 
   Scenario: Check out cart when not logged in
-    Given the user is at the home page
-    And the user has an 'Oranges' item in the cart
+    Given the user has an 'Oranges' item in the cart
+    And the user is at the home page
     When the user clicks on the "My Cart" link
     Then the user should see the Cart
+    And the user should see an 'Oranges' item in the cart
     When the user clicks on the "Checkout Cart" link
     Then the user should see "Please login or sign up to proceed with purchase."
 
