@@ -7,7 +7,7 @@ Feature: Visit store and to select and buy items
   Scenario: View an item's details
     Given there is an 'Oranges' item in the products list
     When the user goes to the products URL
-    Then the user should see the 'Oranges' item in the product catalogue
+    Then the user should see "Oranges"
     When the user clicks on the "Oranges" link
     Then the user should see the 'Oranges' item details
     And the user should see the 'Back' link
@@ -18,8 +18,8 @@ Feature: Visit store and to select and buy items
     Given there is an 'Oranges' item in the products list
     When the user goes to the products URL
     And the user clicks on the 'Add to Cart' button for the 'Oranges' item
-    Then the user should see the Cart
-    And the user should see an 'Oranges' item in the cart
+    Then the user should see "Your Cart"
+    And the user should see "Oranges"
     And the 'Oranges' item should have quantity 1
     When the user clicks on the "Continue shopping" link
     Then the user should be able to go back to the home page
@@ -28,8 +28,8 @@ Feature: Visit store and to select and buy items
     Given the user has an 'Oranges' item in the cart
     And the user is at the home page
     When the user clicks on the "My Cart" link
-    Then the user should see the Cart
-    And the user should see an 'Oranges' item in the cart
+    Then the user should see "Your Cart"
+    And the user should see "Oranges"
     When the user clicks on the "Checkout Cart" link
     Then the user should see "Please login or sign up to proceed with purchase."
 

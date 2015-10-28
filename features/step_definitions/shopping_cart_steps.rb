@@ -8,10 +8,6 @@ When(/^the user goes to the products URL$/) do
   visit products_path
 end
 
-Then(/^the user should see the 'Oranges' item in the product catalogue$/) do
-  expect(page).to have_content('Oranges')
-end
-
 When(/^the user clicks on the "(.*?)" link$/) do |link_name|
   click_link link_name
 end
@@ -33,14 +29,6 @@ end
 
 When(/^the user clicks on the 'Add to Cart' button for the 'Oranges' item$/) do
   click_button 'Add to Cart'
-end
-
-Then(/^the user should see the Cart$/) do
-  expect(page).to have_content('Your Cart')
-end
-
-Then(/^the user should see an 'Oranges' item in the cart$/) do
-  expect(page).to have_content('Oranges')
 end
 
 Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
