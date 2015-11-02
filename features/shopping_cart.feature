@@ -33,5 +33,20 @@ Feature: Visit store and to select and buy items
     When the user clicks on the "Checkout Cart" link
     Then the user should see "Please login or sign up to proceed with purchase."
 
+  Scenario: Check out cart when logged in and has shipping address
+    Given the user has an 'Oranges' item in the cart
+    And the user has a shipping address
+    When the user logs in
+    Then the user should be at the home page
+    And the user should see the user name
+    When the user clicks on the "My Cart" link
+    Then the user should see "Your Cart"
+    When the user clicks on the "Checkout Cart" link
+    Then the user should see "Please select a shipping address"
+    When the user clicks on the 'Proceed' button
+    Then the user should see "Order Status: submitted"
+
+  Scenario: Reload user's cart upon login
+  Scenario: Combine pending carts after login
   Scenario: Add an item to cart when logged in
   Scenario: Empty cart

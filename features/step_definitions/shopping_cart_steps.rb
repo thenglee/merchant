@@ -50,3 +50,32 @@ end
 Then(/^the user should see "(.*?)"$/) do |content|
   expect(page).to have_content(content)
 end
+
+And(/^the user has a shipping address$/) do
+  user = User.create(provider: "twitter", uid: "0123456789", name: "User Name")
+  address = user.addresses.create(line1: "line1", line2: "line2", city: "city", state: "WA", zip: "12345")
+end
+
+When(/^the user logs in$/) do
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
+      :provider => 'twitter',
+      :uid => '0123456789',
+      :info => { :name => 'User Name' }
+    })
+  Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
+
+  visit('/auth/twitter/callback')
+end
+
+Then(/^the user should be at the home page$/) do
+  expect(current_path).to eq root_path
+end
+
+Then(/^the user should see the user name$/) do
+  expect(page).to have_content('Welcome, User Name')
+end
+
+When(/^the user clicks on the 'Proceed' button$/) do
+  click_button 'Proceed'
+end
