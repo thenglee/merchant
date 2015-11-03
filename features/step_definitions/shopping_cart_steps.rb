@@ -1,7 +1,7 @@
 require "rack_session_access/capybara"
 
 Given(/^there is an 'Oranges' item in the products list$/) do
-  Product.create(title: "Oranges", price: 2.99, description: "Bag of 6 Valencia oranges", image_url: "oranges.jpg", stock: 50)
+  FactoryGirl.create(:product_oranges)
 end
 
 When(/^the user goes to the products URL$/) do
@@ -36,7 +36,7 @@ Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
 end
 
 Given(/^the user has an 'Oranges' item in the cart$/) do
-  product = Product.create(title: "Oranges", price: 2.99, description: "Bag of 6 Valencia oranges", image_url: "oranges.jpg", stock: 50)
+  product = FactoryGirl.create(:product_oranges)
   order = Order.create(status: "unsubmitted")
   order.order_items.create(product_id: product.id, quantity: 1)
 
@@ -74,7 +74,7 @@ end
 
 Given(/^the user has a pending cart with 3 'Carrots' items$/) do
   user = User.create(provider: "twitter", uid: "0123456789", name: "User Name")
-  product = Product.create(title: "Carrots (1 pack)", price: 3.20, description: "A pack of 5 carrots", image_url: "carrots.jpg", stock: 30)
+  product = FactoryGirl.create(:product_carrots)
   order = user.orders.create(status: "unsubmitted")
   order.order_items.create(product_id: product.id, quantity: 3)
 end
