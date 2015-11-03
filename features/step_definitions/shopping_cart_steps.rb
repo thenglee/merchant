@@ -36,7 +36,9 @@ Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
 end
 
 Given(/^the user has an 'Oranges' item in the cart$/) do
-  product = FactoryGirl.create(:product_oranges)
+  step "there is an 'Oranges' item in the products list"
+
+  product = Product.find_by(title: "Oranges")
   order = Order.create(status: "unsubmitted")
   order.order_items.create(product_id: product.id, quantity: 1)
 
@@ -81,4 +83,13 @@ end
 
 Then(/^the 'Carrots' item should have quantity (\d+)$/) do |item_quantity|
   expect(page).to have_content(item_quantity)
+end
+
+Given(/^the user has a pending cart with (\d+) 'Oranges' items$/) do |quantity|
+  step "there is an 'Oranges' item in the products list"
+
+  user = User.create(provider: "twitter", uid: "0123456789", name: "User Name")
+  product = Product.find_by(title: "Oranges")
+  order = user.orders.create(status: "unsubmitted")
+  order.order_items.create(product_id: product.id, quantity: quantity)
 end

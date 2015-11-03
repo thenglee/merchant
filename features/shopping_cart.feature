@@ -55,6 +55,15 @@ Feature: Visit store and to select and buy items
     Then the user should see "Carrots"
     And the 'Carrots' item should have quantity 3
 
-  Scenario: Combine pending carts after login
+  Scenario: Combine pending carts with same items after login
+    Given the user has a pending cart with 3 'Oranges' items
+    And the user has an 'Oranges' item in the cart
+    When the user logs in
+    Then the user should be at the home page
+    And the user should see the user name
+    When the user clicks on the "My Cart" link
+    Then the user should see "Oranges"
+    And the 'Oranges' item should have quantity 4
+
   Scenario: Add an item to cart when logged in
   Scenario: Empty cart
