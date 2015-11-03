@@ -23,12 +23,12 @@ Then(/^the user should see the 'Back' link$/) do
   find_link('Back').visible?
 end
 
-When(/^the user should be able to go back to the home page$/) do
+Then(/^the user should be at the home page$/) do
   expect(current_path).to eq root_path
 end
 
-When(/^the user clicks on the 'Add to Cart' button for the 'Oranges' item$/) do
-  click_button 'Add to Cart'
+When(/^the user clicks on the "(.*?)" button/) do |button_name|
+  click_button button_name
 end
 
 Then(/^the 'Oranges' item should have quantity (\d+)$/) do |item_quantity|
@@ -68,14 +68,6 @@ When(/^the user logs in$/) do
   visit('/auth/twitter/callback')
 end
 
-Then(/^the user should be at the home page$/) do
-  expect(current_path).to eq root_path
-end
-
 Then(/^the user should see the user name$/) do
   expect(page).to have_content('Welcome, User Name')
-end
-
-When(/^the user clicks on the 'Proceed' button$/) do
-  click_button 'Proceed'
 end

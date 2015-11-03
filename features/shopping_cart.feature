@@ -12,17 +12,17 @@ Feature: Visit store and to select and buy items
     Then the user should see the 'Oranges' item details
     And the user should see the 'Back' link
     When the user clicks on the "Back" link
-    And the user should be able to go back to the home page
+    And the user should be at the home page
 
   Scenario: Add an item to cart when not logged in
     Given there is an 'Oranges' item in the products list
     When the user goes to the products URL
-    And the user clicks on the 'Add to Cart' button for the 'Oranges' item
+    And the user clicks on the "Add to Cart" button for the 'Oranges' item
     Then the user should see "Your Cart"
     And the user should see "Oranges"
     And the 'Oranges' item should have quantity 1
     When the user clicks on the "Continue shopping" link
-    Then the user should be able to go back to the home page
+    Then the user should be at the home page
 
   Scenario: Check out cart when not logged in
     Given the user has an 'Oranges' item in the cart
@@ -43,7 +43,7 @@ Feature: Visit store and to select and buy items
     Then the user should see "Your Cart"
     When the user clicks on the "Checkout Cart" link
     Then the user should see "Please select a shipping address"
-    When the user clicks on the 'Proceed' button
+    When the user clicks on the "Proceed" button
     Then the user should see "Order Status: submitted"
 
   Scenario: Reload user's cart upon login
