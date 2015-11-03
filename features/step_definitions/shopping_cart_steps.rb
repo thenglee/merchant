@@ -71,3 +71,14 @@ end
 Then(/^the user should see the user name$/) do
   expect(page).to have_content('Welcome, User Name')
 end
+
+Given(/^the user has a pending cart with 3 'Carrots' items$/) do
+  user = User.create(provider: "twitter", uid: "0123456789", name: "User Name")
+  product = Product.create(title: "Carrots (1 pack)", price: 3.20, description: "A pack of 5 carrots", image_url: "carrots.jpg", stock: 30)
+  order = user.orders.create(status: "unsubmitted")
+  order.order_items.create(product_id: product.id, quantity: 3)
+end
+
+Then(/^the 'Carrots' item should have quantity (\d+)$/) do |item_quantity|
+  expect(page).to have_content(item_quantity)
+end
