@@ -26,7 +26,6 @@ Here are the additional components that were not part of the tutorial:
 There were some bugs and issues with the business workflow (e.g. product stock does not decrease with purchase) after the tutorial was completed. Below are the added refinements that were completed after the tutorial. For the summarised list of issues/bugs and solutions during the coding process, refer to the wiki page [here](https://github.com/thenglee/merchant/wiki/Post-tutorial:-Issues-and-solutions).
 
 ##### Product
-* When product is out of stock, display 'Sold out' label instead of 'Add to Cart' button
 * Dynamic product stock update with user order process:
   * Product stock decreases when user
     * Adds product item to cart
@@ -37,10 +36,6 @@ There were some bugs and issues with the business workflow (e.g. product stock d
     * Empty the cart
 
 ##### Order
-* If there are no items in the cart, display 'Your cart is empty'
-* Edit order item page
-  * When user updates an item quantity to a value more than stock and current quantity combined, re-render the edit page with error message
-  * Display product stock and current quantity
 * Replace 'Shipping To' section and 'Submit' button with 'Checkout Cart' link
 * Updated checkout cart process:
 
@@ -57,6 +52,3 @@ There were some bugs and issues with the business workflow (e.g. product stock d
 
 ##### Sidebar
 * Display 'My Cart' link in top sidebar
-
-
-
